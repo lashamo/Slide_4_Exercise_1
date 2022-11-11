@@ -4,33 +4,26 @@ public class Card {
 
     private int cardNumber;
     private double moneyAmount;
-    private  String ownerPersonalNumber;
+    private String ownerPersonalNumber;
 
-    public Card(){
+    public Card() {
 
     }
-    public Card (int cardNumber, double moneyAmount, String ownerPersonalNumber) throws NotValidCardException{
 
-        {if (cardNumber % 2 == 0 && cardNumber < 10000 && moneyAmount < 0 &&
-                ownerPersonalNumber.length() != 11)
-        {
-            throw new NotValidCardException("Please enter wright card information");
-        }
-            this.cardNumber = cardNumber;
-            this.moneyAmount = moneyAmount;
-            this.ownerPersonalNumber = ownerPersonalNumber;
-        }
+    public Card(int cardNumber, double moneyAmount, String ownerPersonalNumber) throws NotValidCardException {
+        setCardNumber(cardNumber);
+        setMoneyAmount(moneyAmount);
+        setOwnerPersonalNumber(ownerPersonalNumber);
     }
 
     public int getCardNumber() {
         return cardNumber;
     }
 
-    public void setCardNumber(int cardNumber) throws NotValidCardException{
-        if (cardNumber % 2 == 0 && cardNumber < 10000 ){
-            throw new NotValidCardException("Please enter correct something");
+    public void setCardNumber(int cardNumber) throws NotValidCardException {
+        if (cardNumber % 2 == 0 || cardNumber <= 10_000) {
+            throw new NotValidCardException("Card number is not valid");
         }
-    }  {
         this.cardNumber = cardNumber;
     }
 
@@ -38,11 +31,10 @@ public class Card {
         return moneyAmount;
     }
 
-    public void setMoneyAmount(double moneyAmount) throws NotValidCardException{
-        if (moneyAmount < 0){
-            throw new NotValidCardException("Please enter natural number");
+    public void setMoneyAmount(double moneyAmount) throws NotValidCardException {
+        if (moneyAmount < 0) {
+            throw new NotValidCardException("Money amount is less than 0");
         }
-    } {
         this.moneyAmount = moneyAmount;
     }
 
@@ -50,29 +42,27 @@ public class Card {
         return ownerPersonalNumber;
     }
 
-    public void setOwnerPersonalNumber(String ownerPersonalNumber) throws NotValidCardException{
-        if (ownerPersonalNumber.length() != 11){
+    public void setOwnerPersonalNumber(String ownerPersonalNumber) throws NotValidCardException {
+        if (ownerPersonalNumber.length() != 11) {
             throw new NotValidCardException("Personal number must be 11 character");
-
         }
-    } {
         this.ownerPersonalNumber = ownerPersonalNumber;
     }
 
-
-    public double deposit(double number) throws NotValidOperationException{
-        if (number < 0){
-            throw new NotValidOperationException("Please enter number which will be >0");
+    public void deposit(double amount) throws NotValidOperationException {
+        if (amount < 0) {
+            throw new NotValidOperationException("Amount must be more than 0");
         }
-        return   moneyAmount = moneyAmount + number;
+        moneyAmount = moneyAmount + amount;
     }
 
-    public double withdraw(double amount) throws NotValidOperationException {
-        if (amount < 0){
-            throw new NotValidOperationException("Please enter number which well be >0");
+    public void withdraw(double amount) throws NotValidOperationException {
+        if (amount < 0) {
+            throw new NotValidOperationException("Amount must be more than 0");
         }
-        return moneyAmount = moneyAmount - amount;
+        if (amount > moneyAmount) {
+            throw new NotValidOperationException("Withdraw amount must be more or equal than money amount");
+        }
+        moneyAmount = moneyAmount - amount;
     }
-
-
 }
